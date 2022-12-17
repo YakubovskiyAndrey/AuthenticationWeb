@@ -14,10 +14,10 @@ public class AuthenticationController {
     }
 
     @RequestMapping("/showHomePage")
-    public String showUserHomePage(@RequestParam("username") String userName,
+    public String showUserHomePage(@RequestParam("login") String login,
+                                   @RequestParam("password") String password,
                                    Model model){
 
-        model.addAttribute("nameAttribute", userName + "-top");
 
         return "user-home-page";
     }
