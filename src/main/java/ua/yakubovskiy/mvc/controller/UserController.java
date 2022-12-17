@@ -19,6 +19,7 @@ public class UserController {
 
     @RequestMapping("/")
     public String askUserLogin(){
+
         return "ask-user-login";
     }
 
@@ -27,8 +28,14 @@ public class UserController {
                                    @RequestParam("password") String password,
                                    Model model){
 
-        model.addAttribute("nameAttribute", userService.checkUser(login , password));
-        return "user-home-page";
+        boolean result = userService.checkUser(login, password);
+        if(!result){
+            model.addAttribute("result", false);
+            return "ask-user-login";
+        }else {
+            model.addAttribute("nameAttribute", true);
+            return "user-home-page";
+        }
     }
 
 }

@@ -29,6 +29,7 @@
     <input type = "submit" class="btn btn-info col-2" value = "Login"/>
 
     </form>
+    Exist = ${result}
  <div class="container">
 </body>
 </html>
