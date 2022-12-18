@@ -21,4 +21,7 @@ public class UserRepository {
                 .anyMatch(user -> user.getLogin().equals(login) && user.getPassword().equals(password));
     }
 
+    public List<User> showAll(){
+        return users;
+    }
 }

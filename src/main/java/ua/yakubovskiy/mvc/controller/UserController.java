@@ -29,7 +29,6 @@ public class UserController {
         if (!"".equals(login) && !"".equals(password)) {
             boolean result = userService.checkUser(login, password);
             if (result) {
-                model.addAttribute("nameAttribute", true);
                 return "user-home-page";
             } else {
                 model.addAttribute("error", "user is not found");
@@ -41,4 +40,14 @@ public class UserController {
         }
     }
 
+    @RequestMapping("/allUsers")
+    public String showAllUsers(Model model) {
+        model.addAttribute("users", userService.showAll());
+        return "all-users";
+    }
+
+    @RequestMapping("/redirectLogin")
+    public String redirectLogin() {
+        return "redirect:/";
+    }
 }
