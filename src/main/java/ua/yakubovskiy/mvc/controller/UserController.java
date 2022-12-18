@@ -19,22 +19,25 @@ public class UserController {
 
     @RequestMapping("/")
     public String askUserLogin(){
-
         return "ask-user-login";
     }
 
     @RequestMapping("/showHomePage")
     public String showUserHomePage(@RequestParam("login") String login,
                                    @RequestParam("password") String password,
-                                   Model model){
-
-        boolean result = userService.checkUser(login, password);
-        if(!result){
-            model.addAttribute("result", false);
-            return "ask-user-login";
+                                   Model model) {
+        if (!"".equals(login) && !"".equals(password)) {
+            boolean result = userService.checkUser(login, password);
+            if (result) {
+                model.addAttribute("nameAttribute", true);
+                return "user-home-page";
+            } else {
+                model.addAttribute("error", "user is not found");
+                return "ask-user-login";
+            }
         }else {
-            model.addAttribute("nameAttribute", true);
-            return "user-home-page";
+            model.addAttribute("error", "login and password cannot be empty");
+            return "ask-user-login";
         }
     }
 
