@@ -46,8 +46,8 @@ public class UserController {
         return "all-users";
     }
 
-    @RequestMapping("/redirectLogin")
-    public String redirectLogin() {
+    @RequestMapping("/logout")
+    public String logout() {
         return "redirect:/";
     }
 }

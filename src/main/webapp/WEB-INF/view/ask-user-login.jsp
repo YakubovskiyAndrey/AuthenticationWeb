@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
   <meta charset="ISO-8859-1">
   <title>User authentication</title>
@@ -15,7 +15,7 @@
     <br>
     <input type = "text" name = "login" class="form-control mb-4 col-4"
            placeholder = "login"/>
-    <input type = "text" name = "password" class="form-control mb-4 col-4"
+    <input type = "password" name = "password" class="form-control mb-4 col-4"
            placeholder = "password"/>
     <input type = "submit" class="btn btn-info" value = "Login"/>
     <div style="color: red">${error}</div>

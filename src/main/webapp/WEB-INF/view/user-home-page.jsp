@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
   <meta charset="ISO-8859-1">
   <title>Home page</title>
@@ -15,7 +15,7 @@
     <input type = "submit" class="btn btn-success" value = "Show all users"/>
   </form>
   <br>
-  <form action = "redirectLogin" method = "GET">
+  <form action = "logout" method = "GET">
     <input type = "submit" class="btn btn-info" value = "Logout"/>
   </form>
 </div>
