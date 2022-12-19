@@ -28,6 +28,9 @@ prefix="c" %>
     </c:forEach>
   </table>
   <hr>
+  <form action = "returnMainMenu" method = "GET">
+      <input type = "submit" class="btn btn-link" value = "Back to the menu"/>
+    </form>
 </div>
 </body>
 </html>

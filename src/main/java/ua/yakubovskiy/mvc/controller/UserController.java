@@ -50,4 +50,9 @@ public class UserController {
     public String logout() {
         return "redirect:/";
     }
+
+    @RequestMapping("/returnMainMenu")
+    public String returnMainMenu() {
+        return "user-home-page";
+    }
 }
