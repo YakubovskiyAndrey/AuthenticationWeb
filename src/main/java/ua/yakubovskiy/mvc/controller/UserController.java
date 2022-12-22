@@ -3,14 +3,17 @@ package ua.yakubovskiy.mvc.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import ua.yakubovskiy.mvc.entity.User;
 import ua.yakubovskiy.mvc.service.UserService;
 
 @Controller
 public class UserController {
 
     private final UserService userService;
+
+    private boolean userLogged;
 
     @Autowired
     public UserController(UserService userService) {
@@ -19,16 +22,15 @@ public class UserController {
 
     @RequestMapping("/")
     public String askUserLogin(){
+        userLogged = false;
         return "ask-user-login";
     }
 
     @RequestMapping("/showHomePage")
-    public String showUserHomePage(@RequestParam("login") String login,
-                                   @RequestParam("password") String password,
-                                   Model model) {
-        if (!"".equals(login) && !"".equals(password)) {
-            boolean result = userService.checkUser(login, password);
-            if (result) {
+    public String showUserHomePage(@ModelAttribute("user") User user, Model model) {
+        if (!"".equals(user.getLogin()) && !"".equals(user.getPassword())) {
+            userLogged = userService.checkUser(user);
+            if (userLogged) {
                 return "user-home-page";
             } else {
                 model.addAttribute("error", "user is not found");
@@ -42,8 +44,12 @@ public class UserController {
 
     @RequestMapping("/allUsers")
     public String showAllUsers(Model model) {
-        model.addAttribute("users", userService.showAll());
-        return "all-users";
+        if (userLogged) {
+            model.addAttribute("users", userService.showAll());
+            return "all-users";
+        }else {
+            return logout();
+        }
     }
 
     @RequestMapping("/logout")
@@ -53,6 +59,10 @@ public class UserController {
 
     @RequestMapping("/returnMainMenu")
     public String returnMainMenu() {
-        return "user-home-page";
+        if (userLogged) {
+            return "user-home-page";
+        }else {
+            return logout();
+        }
     }
 }
