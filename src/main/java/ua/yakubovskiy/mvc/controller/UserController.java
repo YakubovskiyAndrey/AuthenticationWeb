@@ -13,7 +13,7 @@ public class UserController {
 
     private final UserService userService;
 
-    private boolean userLogged;
+    private boolean isAuthenticated;
 
     @Autowired
     public UserController(UserService userService) {
@@ -22,29 +22,29 @@ public class UserController {
 
     @RequestMapping("/")
     public String askUserLogin(){
-        userLogged = false;
+        isAuthenticated = false;
         return "ask-user-login";
     }
 
     @RequestMapping("/showHomePage")
     public String showUserHomePage(@ModelAttribute("user") User user, Model model) {
-        if (!"".equals(user.getLogin()) && !"".equals(user.getPassword())) {
-            userLogged = userService.checkUser(user);
-            if (userLogged) {
+        if (!"".equals(user.getUserName()) && !"".equals(user.getPassword())) {
+            isAuthenticated = userService.checkUser(user);
+            if (isAuthenticated) {
                 return "user-home-page";
             } else {
-                model.addAttribute("error", "user is not found");
+                model.addAttribute("error", "User is not found");
                 return "ask-user-login";
             }
         }else {
-            model.addAttribute("error", "login and password cannot be empty");
+            model.addAttribute("error", "Username and password cannot be empty");
             return "ask-user-login";
         }
     }
 
     @RequestMapping("/allUsers")
     public String showAllUsers(Model model) {
-        if (userLogged) {
+        if (isAuthenticated) {
             model.addAttribute("users", userService.showAll());
             return "all-users";
         }else {
@@ -59,7 +59,7 @@ public class UserController {
 
     @RequestMapping("/returnMainMenu")
     public String returnMainMenu() {
-        if (userLogged) {
+        if (isAuthenticated) {
             return "user-home-page";
         }else {
             return logout();

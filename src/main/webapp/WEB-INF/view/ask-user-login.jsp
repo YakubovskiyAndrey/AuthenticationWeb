@@ -11,13 +11,13 @@
 <body>
 <div class="container" align="center">
   <form action = "showHomePage" method = "POST">
-    <h2>Please, enter your login and password</h2>
+    <h2>Please, sign in</h2>
     <br>
-    <input type = "text" name = "login" class="form-control mb-4 col-4"
-           placeholder = "login"/>
+    <input type = "text" name = "userName" class="form-control mb-4 col-4"
+           placeholder = "Username"/>
     <input type = "password" name = "password" class="form-control mb-4 col-4"
-           placeholder = "password"/>
-    <input type = "submit" class="btn btn-info" value = "Login"/>
+           placeholder = "Password"/>
+    <input type = "submit" class="btn btn-info" value = "Sign in"/>
     <div style="color: red">${error}</div>
   </form>
   <div class="container"></div>

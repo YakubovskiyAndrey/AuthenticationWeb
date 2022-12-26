@@ -17,20 +17,20 @@ prefix="c" %>
     <thead>
         <tr>
           <th>Name</th>
-          <th>Login</th>
+          <th>Username</th>
         </tr>
         </thead>
     <c:forEach var="user" items="${users}">
       <tr>
         <td>${user.name}</td>
-        <td>${user.login}</td>
+        <td>${user.userName}</td>
       </tr>
     </c:forEach>
   </table>
   <hr>
   <form action = "returnMainMenu" method = "GET">
       <input type = "submit" class="btn btn-link" value = "Back to the menu"/>
-    </form>
+  </form>
 </div>
 </body>
 </html>

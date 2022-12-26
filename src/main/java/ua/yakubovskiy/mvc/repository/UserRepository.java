@@ -18,7 +18,7 @@ public class UserRepository {
 
     public boolean checkUser(User verifiedUser){
         return users.stream()
-                .anyMatch(user -> user.getLogin().equals(verifiedUser.getLogin())
+                .anyMatch(user -> user.getUserName().equals(verifiedUser.getUserName())
                         && user.getPassword().equals(verifiedUser.getPassword()));
     }
 
