@@ -2,11 +2,12 @@ package ua.yakubovskiy.mvc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import ua.yakubovskiy.mvc.entity.User;
 import ua.yakubovskiy.mvc.service.UserService;
+import ua.yakubovskiy.mvc.service.UserServiceImpl;
 
 @Controller
 public class UserController {
@@ -16,51 +17,53 @@ public class UserController {
     private boolean isAuthenticated;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
 
     @RequestMapping("/")
-    public String askUserLogin(){
+    public ModelAndView askUserLogin(){
         isAuthenticated = false;
-        return "ask-user-login";
+        return new ModelAndView("ask-user-login");
     }
 
     @RequestMapping("/showHomePage")
-    public String showUserHomePage(@ModelAttribute("user") User user, Model model) {
+    public ModelAndView showUserHomePage(@ModelAttribute("user") User user) {
+        if (isAuthenticated) return new ModelAndView("/user-home-page");
+
         if (!"".equals(user.getUserName()) && !"".equals(user.getPassword())) {
             isAuthenticated = userService.checkUser(user);
             if (isAuthenticated) {
-                return "user-home-page";
+                return new ModelAndView("/user-home-page");
             } else {
-                model.addAttribute("error", "User is not found");
-                return "ask-user-login";
+                return new ModelAndView("/ask-user-login",
+                        "error", "User is not found");
             }
         }else {
-            model.addAttribute("error", "Username and password cannot be empty");
-            return "ask-user-login";
+            return new ModelAndView("/ask-user-login",
+                    "error", "Username and password cannot be empty");
         }
     }
 
     @RequestMapping("/allUsers")
-    public String showAllUsers(Model model) {
+    public ModelAndView showAllUsers() {
         if (isAuthenticated) {
-            model.addAttribute("users", userService.showAll());
-            return "all-users";
+            return new ModelAndView("/all-users",
+                    "users", userService.showAll());
         }else {
             return logout();
         }
     }
 
     @RequestMapping("/logout")
-    public String logout() {
-        return "redirect:/";
+    public ModelAndView logout() {
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping("/returnMainMenu")
-    public String returnMainMenu() {
+    public ModelAndView returnMainMenu() {
         if (isAuthenticated) {
-            return "user-home-page";
+            return new ModelAndView("/user-home-page");
         }else {
             return logout();
         }

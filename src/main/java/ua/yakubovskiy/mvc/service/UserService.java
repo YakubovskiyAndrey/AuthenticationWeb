@@ -1,22 +1,11 @@
 package ua.yakubovskiy.mvc.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ua.yakubovskiy.mvc.entity.User;
-import ua.yakubovskiy.mvc.repository.UserRepository;
 import java.util.List;
 
-@Service
-public class UserService {
+public interface UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    boolean checkUser(User user);
 
-    public boolean checkUser(User user){
-        return userRepository.checkUser(user);
-    }
-
-    public List<User> showAll(){
-        return userRepository.showAll();
-    }
+    List<User> showAll();
 }
